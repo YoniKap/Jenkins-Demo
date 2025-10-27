@@ -17,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building app...'
-                sh 'mkdir -p build && cp index.html build/'
+                sh 'cd app'
             }
         }
 
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+               {
                     sh """
                         echo "pushing to dockerhub"
                     """
