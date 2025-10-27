@@ -37,11 +37,10 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-               {
-                    sh """
-                        echo "pushing to dockerhub"
-                    """
-                }
+                // This block previously had an extra set of braces — fixed here
+                sh """
+                    echo "pushing to dockerhub"
+                """
             }
         }
 
