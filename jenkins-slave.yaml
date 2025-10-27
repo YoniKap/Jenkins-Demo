@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-agent
+  template:
+    metadata:
+      labels:
+        app: jenkins-agent
+    spec:
+      securityContext:
+        runAsUser: 0  
+      containers:
+      - name: jenkins-agent
+        image: jenkins/inbound-agent:jdk17
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        env:
+        - name: JENKINS_URL
+          value: "http://jenkins-0.jenkins:8080/"       
+        - name: JENKINS_AGENT_NAME
+          value: "agent1"
+        - name: JENKINS_SECRET
+          value:  "5ca7fc534d7c648e00ca664978f7c7841afe6c6a8da280ee538e2bcd959e6b1b"  
+          
+        volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+      nodeSelector: {}
+      tolerations: []
