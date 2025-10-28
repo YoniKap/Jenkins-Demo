@@ -31,13 +31,12 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo "Building Docker image..."
-                sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                sh "docker build"
             }
         }
 
         stage('Push to DockerHub') {
             steps {
-                // This block previously had an extra set of braces — fixed here
                 sh """
                     echo "pushing to dockerhub"
                 """
